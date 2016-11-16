@@ -1,0 +1,12 @@
+language: ruby
+
+rvm:
+  - 2.3.1
+
+script: bundle exec rspec
+
+# deploy:
+#   provider: heroku
+#   app: yose-ruby
+#   api_key:
+#     secure: P+1ig05Oc2kMxCS3p1f8k1bqjJrtBmWABjLF23tBpcEHWG0J7p3km5rnFIRPelxKpVHZKJkzA+bTqUaJFcCFaOGpObZOJsiquDJlE+nRhGCqzscm6bUioTNNx2B+ZF0pqhFgIaIp2jao2gY/HQ530IXPS5YeDnxgQH04DDbEQS1jdjhwFjF+0+gQDyan3nlDJcu8axRxFggtJ0FvUQPXIpXiNoR59iti56FBfCyIwIGvD3+5JsNvNUvTEJ0u1Mq1b4sbaF41KwfylXsHg/yep1+Bj73mCGrHukG+Rq4PsIRWw3gqZG0w8tB6XbCkwV7eKqLPRcwvzSOHw5gqFg95kQbdgOMNsNEHY8hj2/YijadqFs2nDaF80BfisCOxyy4PNPENNrRY95AIgWpiGFDd938F5X5NPUSrgqxDmkvJbo7ELehty1Z+VCvmKV746QjKCPGgrQ/Qj9ou/7QDmvIe85dUwTwMRvaq8itXNn2+Vx6BQ7oulmT8vr4B3orrXNjhqAIDVI95/3GIcw5LQ4xb9qRsqdscoktyJhHiiSc/i6wXNFZUBQtOvrQMjtLx8EP/mJShvaaomSF6ehTlibpE3igXGq2U57KIebY0BkHtxlJLURU//WXvvr8HGHWizelvwPgbScoTXI3ge9tl5WZgkc4lXXT7+HdEJKkq1AxVmPo=
