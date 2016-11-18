@@ -37,11 +37,12 @@ describe StationRepo do
     )
   end
 
-  it 'finds a station based on parts of the name' do
-    station = subject.by_name('howard')
+  it 'finds all stations matching the given name' do
+    stations = subject.by_name('St')
 
-    expect(station).to have_attributes(
-      name: 'Howard St & Centre St'
+    expect(stations).to include(
+      have_attributes(name: 'Howard St & Centre St'),
+      have_attributes(name: 'W 52 St & 11 Ave'),
     )
   end
 end

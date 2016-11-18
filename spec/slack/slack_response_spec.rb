@@ -9,10 +9,22 @@ describe SlackFormatter do
     converted = SlackFormatter.format(station)
 
     expect(as_json(converted)).to include(
-      text: 'Station Name',
       attachments: [
-        { text: 'Available bikes: 22' },
-        { text: 'Free docks: 11' }
+        { title: 'Station Name', "text": "Avail. Bikes: 22\nFree Docks: 11" }
+      ]
+    )
+  end
+
+  it 'converts a list of stations into Slack format' do
+    station1 = Station.new("Station1", 22, 11)
+    station2 = Station.new("Station2", 9, 42)
+
+    converted = SlackFormatter.format(station1, station2)
+
+    expect(as_json(converted)).to include(
+      attachments: [
+        { title: 'Station1', "text": "Avail. Bikes: 22\nFree Docks: 11" },
+        { title: 'Station2', "text": "Avail. Bikes: 9\nFree Docks: 42" }
       ]
     )
   end

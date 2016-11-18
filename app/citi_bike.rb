@@ -11,14 +11,14 @@ class CitiBike
   def call(env)
     request = Rack::Request.new(env)
     query = request.params['text']
-    station = station_repo.search(query)
+    stations = station_repo.search(query)
 
-    [200, { 'Content-Type' => 'application/json' }, respond_with(station)]
+    [200, { 'Content-Type' => 'application/json' }, respond_with(stations)]
   end
 
   private
 
-  def respond_with(station)
-    [SlackFormatter.format(station)]
+  def respond_with(stations)
+    [SlackFormatter.format(*stations)]
   end
 end

@@ -13,14 +13,14 @@ class StationRepo
   end
 
   def by_name(name)
-    stations_by_id.values.find { |s| s.name.downcase.include?(name.downcase) }
+    stations_by_id.values.select { |s| s.name.downcase.include?(name.downcase) }
   end
 
   def search(query)
     if is_an_integer?(query)
-      station = by_id(query)
+      stations = [by_id(query)]
     else
-      station = by_name(query)
+      stations = by_name(query)
     end
   end
 

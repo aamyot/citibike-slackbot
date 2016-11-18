@@ -16,40 +16,24 @@ describe 'Bikes Availability' do
 
     expect(last_response.status).to be(200)
     expect(last_response.content_type).to eq('application/json')
-    expect(JSON.parse(last_response.body, symbolize_names: true)).to include(
-      text: 'Howard St & Centre St',
-      attachments: [
-        { text: 'Available bikes: 21' },
-        { text: 'Free docks: 5' }
-      ]
-    )
+    expect(last_response.body).to include(station_with('Howard St & Centre St', 21, 5))
   end
 
   it 'returns the bike availability for the station matching the given name' do
     post '/stations', 'text' => 'howard'
 
-    expect(JSON.parse(last_response.body, symbolize_names: true)).to include(
-      text: 'Howard St & Centre St'
-    )
+    expect(last_response.body).to include(station_with('Howard St & Centre St', 21, 5))
   end
 
-  xit 'returns the bike availability for the given station' do
-    post '/stations'
+  it 'returns all stations matching the given name' do
+    post '/stations', 'text' => 'St'
 
     expect(last_response.status).to be(200)
     expect(last_response.content_type).to eq('application/json')
-    expect(JSON.parse(last_response.body, symbolize_names: true)).to include(
-      text: 'Howard St & Centre St',
-      attachments: [
-        { text: 'Available bikes: 21' },
-        { text: 'Free docks: 5' }
-      ]
-    ).and(include(
-      text: 'W 52 St & 11 Ave',
-      attachments: [
-        { text: 'Available bikes: 19' },
-        { text: 'Free docks: 20' }
-      ]
-    ))
+    expect(last_response.body).to include('W 52 St & 11 Ave').and(include('Howard St & Centre St'))
+  end
+
+  def station_with(name, available_bikes, free_docks)
+   SlackFormatter.format(Station.new(name, available_bikes, free_docks))
   end
 end
