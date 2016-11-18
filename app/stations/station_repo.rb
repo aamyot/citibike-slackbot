@@ -18,9 +18,14 @@ class StationRepo
     @stations_by_id ||=
       details[:data][:stations].inject({}) do |by_id, info|
         id = info[:station_id]
-        status = statuses[:data][:stations].find { |d| d[:station_id] == id } || Hash.new(0)
+        status = statuses_by_station_id[id] || Hash.new(0)
         by_id.merge({ id => Station.new(info[:name], status[:num_bikes_available], status[:num_docks_available]) })
       end
+  end
+
+  def statuses_by_station_id
+    @statuses_by_station_id ||=
+      statuses.inject({}) { |by_id, status| by_id.merge({ status[:station_id] => status }) }
   end
 
   def details
@@ -28,6 +33,6 @@ class StationRepo
   end
 
   def statuses
-    JsonFeed.for('https://gbfs.citibikenyc.com/gbfs/en/station_status.json')
+    JsonFeed.for('https://gbfs.citibikenyc.com/gbfs/en/station_status.json')[:data][:stations]
   end
 end

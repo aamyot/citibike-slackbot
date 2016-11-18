@@ -1,5 +1,5 @@
-require './app/stations/station'
 require './app/stations/station_repo'
+require './app/slack/slack_formatter'
 
 class CitiBike
   attr_reader :station_repo
