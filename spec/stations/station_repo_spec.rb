@@ -36,4 +36,12 @@ describe StationRepo do
       free_docks: 0
     )
   end
+
+  it 'finds a station based on parts of the name' do
+    station = subject.by_name('howard')
+
+    expect(station).to have_attributes(
+      name: 'Howard St & Centre St'
+    )
+  end
 end

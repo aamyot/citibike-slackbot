@@ -11,7 +11,7 @@ describe 'Bikes Availability' do
     CitiBike.new
   end
 
-  it 'returns the bike availability for the given station' do
+  it 'returns the bike availability for the given station id' do
     post '/stations', 'text' => '268'
 
     expect(last_response.status).to be(200)
@@ -22,6 +22,14 @@ describe 'Bikes Availability' do
         { text: 'Available bikes: 21' },
         { text: 'Free docks: 5' }
       ]
+    )
+  end
+
+  it 'returns the bike availability for the station matching the given name' do
+    post '/stations', 'text' => 'howard'
+
+    expect(JSON.parse(last_response.body, symbolize_names: true)).to include(
+      text: 'Howard St & Centre St'
     )
   end
 

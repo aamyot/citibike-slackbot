@@ -12,6 +12,18 @@ class StationRepo
     stations_by_id.values
   end
 
+  def by_name(name)
+    stations_by_id.values.find { |s| s.name.downcase.include?(name.downcase) }
+  end
+
+  def search(query)
+    if is_an_integer?(query)
+      station = by_id(query)
+    else
+      station = by_name(query)
+    end
+  end
+
   private
 
   def stations_by_id
@@ -34,5 +46,9 @@ class StationRepo
 
   def statuses
     JsonFeed.for('https://gbfs.citibikenyc.com/gbfs/en/station_status.json')[:data][:stations]
+  end
+
+  def is_an_integer?(text)
+    text !~ /\D/
   end
 end
