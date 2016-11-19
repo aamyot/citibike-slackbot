@@ -16,7 +16,7 @@ describe 'Bikes Availability' do
 
     expect(last_response.status).to be(200)
     expect(last_response.content_type).to eq('application/json')
-    expect(last_response.body).to include(station_with('Howard St & Centre St', 21, 5))
+    expect(last_response.body).to include('Howard St & Centre St')
   end
 
   it 'returns the bike availability for the station matching the given name' do

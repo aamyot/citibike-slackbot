@@ -19,7 +19,8 @@ class StationRepo
 
   def search(query)
     if is_an_integer?(query)
-      stations = [by_id(query)]
+      station = by_id(query)
+      stations = near(station.lat, station.long)
     else
       stations = by_name(query)
     end
