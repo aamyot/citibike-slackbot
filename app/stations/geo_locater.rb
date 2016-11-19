@@ -1,4 +1,4 @@
-class GeoLocation
+class GeoLocater
   attr_reader :lat_range, :long_range
 
   def initialize(lat, long, tolerance)

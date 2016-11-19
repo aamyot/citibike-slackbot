@@ -28,9 +28,13 @@ describe 'Bikes Availability' do
   it 'returns all stations matching the given name' do
     post '/stations', 'text' => 'St'
 
-    expect(last_response.status).to be(200)
-    expect(last_response.content_type).to eq('application/json')
     expect(last_response.body).to include('W 52 St & 11 Ave').and(include('Howard St & Centre St'))
+  end
+
+  it 'returns all stations near a given station' do
+    post '/stations', 'text' => '40.720, -74.000'
+
+    expect(last_response.body).to include('Cleveland Pl & Spring St').and(include('Howard St & Centre St'))
   end
 
   def station_with(name, available_bikes, free_docks)

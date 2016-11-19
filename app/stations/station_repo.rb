@@ -1,5 +1,5 @@
 require_relative 'station'
-require './app/stations/geo_location'
+require './app/stations/geo_locater'
 require './app/support/json_feed'
 
 class StationRepo
@@ -19,15 +19,17 @@ class StationRepo
 
   def search(query)
     if is_an_integer?(query)
-      station = by_id(query)
-      stations = near(station.lat, station.long)
+      return [by_id(query)]
+    elsif is_geo_coordinates?(query)
+      lat, long = *query.split(',').map(&:strip).map(&:to_f)
+      return near(lat, long)
     else
-      stations = by_name(query)
+      return by_name(query)
     end
   end
 
   def near(lat, long)
-    geo_location = GeoLocation.new(lat, long, 0.005)
+    geo_location = GeoLocater.new(lat, long, 0.005)
     all.select { |s| geo_location.near(s.lat, s.long) }
   end
 
@@ -57,5 +59,9 @@ class StationRepo
 
   def is_an_integer?(text)
     text !~ /\D/
+  end
+
+  def is_geo_coordinates?(text)
+    /^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/ =~ text
   end
 end
