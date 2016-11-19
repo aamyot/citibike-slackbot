@@ -112,6 +112,20 @@ class FakeCitiBike
                   "eightd_has_key_dispenser":false
                },
                {
+                 "station_id":"151",
+                 "name":"Cleveland Pl & Spring St",
+                 "short_name":"5492.05",
+                 "lat":40.722103786686034,
+                 "lon":-73.99724900722504,
+                 "region_id":71,
+                 "rental_methods":[
+                    "KEY",
+                    "CREDITCARD"
+                 ],
+                 "capacity":33,
+                 "eightd_has_key_dispenser":false
+               },
+               {
                   "station_id":"42",
                   "name":"No Status",
                   "short_name":"5422.04",

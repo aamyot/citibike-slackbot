@@ -23,7 +23,9 @@ describe StationRepo do
     expect(station).to have_attributes(
       name: 'W 52 St & 11 Ave',
       available_bikes: 19,
-      free_docks: 20
+      free_docks: 20,
+      lat: 40.76727216,
+      long: -73.99392888
     )
   end
 
@@ -43,6 +45,15 @@ describe StationRepo do
     expect(stations).to include(
       have_attributes(name: 'Howard St & Centre St'),
       have_attributes(name: 'W 52 St & 11 Ave'),
+    )
+  end
+
+  it 'returns all stations near a given lat, long' do
+    stations = subject.near(40.720, -74.000)
+
+    expect(stations).to include(
+      have_attributes(name: 'Howard St & Centre St'),
+      have_attributes(name: 'Cleveland Pl & Spring St'),
     )
   end
 end

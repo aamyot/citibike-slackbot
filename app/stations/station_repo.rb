@@ -1,4 +1,5 @@
 require_relative 'station'
+require './app/stations/geo_location'
 require './app/support/json_feed'
 
 class StationRepo
@@ -24,6 +25,11 @@ class StationRepo
     end
   end
 
+  def near(lat, long)
+    geo_location = GeoLocation.new(lat, long, 0.005)
+    all.select { |s| geo_location.near(s.lat, s.long) }
+  end
+
   private
 
   def stations_by_id
@@ -31,7 +37,7 @@ class StationRepo
       details[:data][:stations].inject({}) do |by_id, info|
         id = info[:station_id]
         status = statuses_by_station_id[id] || Hash.new(0)
-        by_id.merge({ id => Station.new(info[:name], status[:num_bikes_available], status[:num_docks_available]) })
+        by_id.merge({ id => Station.new(info[:name], status[:num_bikes_available], status[:num_docks_available], info[:lat], info[:lon]) })
       end
   end
 
