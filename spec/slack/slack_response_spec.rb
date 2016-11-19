@@ -9,6 +9,7 @@ describe SlackFormatter do
     converted = SlackFormatter.format(station)
 
     expect(as_json(converted)).to include(
+      response_type: 'ephemeral',
       attachments: [
         { title: 'Station Name', "text": "Avail. Bikes: 22\nFree Docks: 11" }
       ]
@@ -22,6 +23,7 @@ describe SlackFormatter do
     converted = SlackFormatter.format(station1, station2)
 
     expect(as_json(converted)).to include(
+      response_type: 'ephemeral',
       attachments: [
         { title: 'Station1', "text": "Avail. Bikes: 22\nFree Docks: 11" },
         { title: 'Station2', "text": "Avail. Bikes: 9\nFree Docks: 42" }

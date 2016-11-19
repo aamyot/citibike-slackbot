@@ -5,6 +5,7 @@ module SlackFormatter
 
   def format(*stations)
     {
+      response_type: 'ephemeral',
       attachments:
         stations.flatten.map do |station|
           {
