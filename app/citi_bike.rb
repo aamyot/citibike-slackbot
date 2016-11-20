@@ -11,15 +11,21 @@ class CitiBike
   def call(env)
     request = Rack::Request.new(env)
     query = request.params['text']
-    
+
     stations = station_repo.search(query)
 
-    [200, { 'Content-Type' => 'application/json' }, respond_with(stations)]
+    [200, { 'Content-Type' => 'application/json' }, [respond_with(stations)]]
   end
 
   private
 
   def respond_with(stations)
-    [SlackFormatter.format(*stations)]
+    return no_match unless stations.any?
+
+    SlackFormatter.format(*stations)
+  end
+
+  def no_match
+    ['Could not find any station matching your query. Try `/bike help` for possible options']
   end
 end

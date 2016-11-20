@@ -37,6 +37,12 @@ describe 'Slack Command Response' do
     expect(last_response.body).to include('Cleveland Pl & Spring St').and(include('Howard St & Centre St'))
   end
 
+  it 'returns an error message when no station matches the query' do
+    post '/slack', 'text' => 'unknown station'
+
+    expect(last_response.body).to include('Could not find any station matching your query. Try `/bike help` for possible options')
+  end
+
   def station_with(name, available_bikes, free_docks, lat, long)
    SlackFormatter.format(Station.new(name, available_bikes, free_docks, lat, long))
   end
