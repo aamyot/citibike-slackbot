@@ -11,7 +11,17 @@ describe SlackFormatter do
     expect(as_json(converted)).to include(
       response_type: 'ephemeral',
       attachments: [
-        { title: 'Station Name', "text": "Avail. Bikes: 22\nFree Docks: 11" }
+        {
+          title: 'Station Name', "text": "Avail. Bikes: 22\nFree Docks: 11",
+          actions: [
+            {
+              "name": "near",
+              "text": "Near",
+              "type": "button",
+              "value": "#{station.lat},#{station.long}"
+            }
+          ]
+        }
       ]
     )
   end
@@ -22,13 +32,7 @@ describe SlackFormatter do
 
     converted = SlackFormatter.format(station1, station2)
 
-    expect(as_json(converted)).to include(
-      response_type: 'ephemeral',
-      attachments: [
-        { title: 'Station1', "text": "Avail. Bikes: 22\nFree Docks: 11" },
-        { title: 'Station2', "text": "Avail. Bikes: 9\nFree Docks: 42" }
-      ]
-    )
+    expect(converted).to include('Station1').and(include('Station2'))
   end
 
   def as_json(text)

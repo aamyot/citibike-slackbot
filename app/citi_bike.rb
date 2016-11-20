@@ -11,6 +11,7 @@ class CitiBike
   def call(env)
     request = Rack::Request.new(env)
     query = request.params['text']
+    
     stations = station_repo.search(query)
 
     [200, { 'Content-Type' => 'application/json' }, respond_with(stations)]
