@@ -12,6 +12,8 @@ class CitiBike
     request = Rack::Request.new(env)
     query = request.params['text']
     response_url = request.params['response_url']
+    puts env
+    puts request.params
 
     stations = station_repo.search(query)
 

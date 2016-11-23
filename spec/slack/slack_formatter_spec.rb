@@ -9,7 +9,7 @@ describe SlackFormatter do
     converted = SlackFormatter.format('http://response.url', [station])
 
     expect(as_json(converted)).to include(
-      response_type: 'ephemeral',
+      response_type: 'in_channel',
       attachments: [
         { title: 'Station Name', text: "Avail. Bikes: 22\nFree Docks: 11",
         }

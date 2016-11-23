@@ -5,7 +5,7 @@ module SlackFormatter
 
   def format(response_url, stations)
     {
-      response_type: 'ephemeral',
+      response_type: 'in_channel',
       attachments:
         stations.flatten.map do |station|
           {
