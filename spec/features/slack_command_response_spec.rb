@@ -12,7 +12,7 @@ describe 'Slack Command Response' do
   end
 
   it 'returns the bike availability for the given station id' do
-    post '/slack', 'text' => '268'
+    post '/slack', 'text' => '268', 'response_url' => 'http://response.url'
 
     expect(last_response.status).to be(200)
     expect(last_response.content_type).to eq('application/json')
@@ -40,10 +40,10 @@ describe 'Slack Command Response' do
   it 'returns an error message when no station matches the query' do
     post '/slack', 'text' => 'unknown station'
 
-    expect(last_response.body).to include('Could not find any station matching your query. Try `/bike help` for possible options')
+    expect(last_response.body).to eq('Could not find any station matching your query. Try `/bike help` for possible options')
   end
 
   def station_with(name, available_bikes, free_docks, lat, long)
-   SlackFormatter.format(Station.new(name, available_bikes, free_docks, lat, long))
+   SlackFormatter.format('http://response.url', [Station.new(name, available_bikes, free_docks, lat, long)])
   end
 end
