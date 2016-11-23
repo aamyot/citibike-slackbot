@@ -12,15 +12,21 @@ class CitiBike
     request = Rack::Request.new(env)
     query = request.params['text']
     response_url = request.params['response_url']
-    puts env
-    puts request.params
-
     stations = station_repo.search(query)
 
-    [200, { 'Content-Type' => 'application/json' }, [respond_with(response_url, stations)]]
+    if delay_response? request
+      DelayedResponse.post(response_url, SlackFormatter.format(response_url, stations))
+      [200, {}, []]
+    else
+      [200, { 'Content-Type' => 'application/json' }, [respond_with(response_url, stations)]]
+    end
   end
 
   private
+
+  def delay_response?(request)
+    request['delayed'] == 'true'
+  end
 
   def respond_with(response_url, stations)
     return no_match unless stations.any?
