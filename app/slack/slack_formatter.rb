@@ -9,7 +9,7 @@ module SlackFormatter
       attachments:
         stations.flatten.map do |station|
           {
-            title: "#{station.name}",
+            title: "#{station.name} (#{station.lat},#{station.long})",
             text: "Avail. Bikes: #{station.available_bikes}\nFree Docks: #{station.free_docks}"
           }
         end

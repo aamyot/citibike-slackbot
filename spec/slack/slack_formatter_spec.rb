@@ -4,15 +4,14 @@ require 'json'
 describe SlackFormatter do
 
   it 'converts a station into Slack format' do
-    station = Station.new("Station Name", 22, 11)
+    station = Station.new("Station Name", 22, 11, 40.7, -74.0)
 
     converted = SlackFormatter.format('http://response.url', [station])
 
     expect(as_json(converted)).to include(
       response_type: 'in_channel',
       attachments: [
-        { title: 'Station Name', text: "Avail. Bikes: 22\nFree Docks: 11",
-        }
+        { title: 'Station Name (40.7,-74.0)', text: "Avail. Bikes: 22\nFree Docks: 11" }
       ]
     )
   end
